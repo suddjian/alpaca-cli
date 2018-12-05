@@ -18,7 +18,7 @@ This will add the `alpaca` command to your terminal.
 
 Get an Alpaca api key from https://alpaca.markets, and configure your alpaca cli:
 
-```
+```sh
 alpaca configure --id=<key-id> --secret=<secret-key>
 ```
 
