@@ -1,0 +1,22 @@
+{
+  "name": "alpaca-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "alpaca": "./index.js"
+  },
+  "bin": {
+    "alpaca": "./index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@alpacahq/alpaca-trade-api": "^1.0.2",
+    "command-line-commands": "^2.0.1",
+    "conf": "^2.1.0",
+    "joi": "^14.3.0",
+    "minimist": "^1.2.0",
+    "minimist-options": "^3.0.2"
+  }
+}
