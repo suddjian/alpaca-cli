@@ -14,7 +14,13 @@ and then run:
 npm install -g alpaca-cli
 ```
 
-This will add the `alpaca` command to your terminal
+This will add the `alpaca` command to your terminal.
+
+Get an Alpaca api key from https://alpaca.markets, and configure your alpaca cli:
+
+```
+alpaca configure --id=<key-id> --secret=<secret-key>
+```
 
 ## Usage
 
