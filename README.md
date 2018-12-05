@@ -22,9 +22,10 @@ This will add the `alpaca` command to your terminal
 alpaca <command>
 
 commands:
-  buy      buy a stock
-  sell     sell a stock
-  report   display a report of your current portfolio
+  configure   configure your alpaca cli installation
+  buy         buy a stock
+  sell        sell a stock
+  report      display a report of your current portfolio
 ```
 
 Run `alpaca help <command>` for help with a specific command.
