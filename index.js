@@ -47,7 +47,11 @@ const REPORT_USAGE = `'report' is not yet implemented! :(
 
 Code contributions are welcome!`
 
-const CONFIGURE_USAGE = `alpaca configure [--id=<key id>] [--secret=<secret key>] [--mode=<paper|live>]`
+const CONFIGURE_USAGE = `alpaca configure [--id=<key-id>] [--secret=<secret-key>] [--mode=<paper|live>]
+
+Get your api key at https://alpaca.markets.
+
+'paper' mode switches on paper trading. 'live' is the default, and uses real money.`
 
 const HELP = `Usage:
 alpaca <command>
@@ -62,7 +66,7 @@ Run 'alpaca help <command>' for help with a specific command.
 `
 
 const HELP_DETAILS = {
-  configure: CONFIGURE_USAGE + '\n\nConfigures your alpaca cli installation',
+  configure: CONFIGURE_USAGE,
   buy: BUY_USAGE + '\n\nBuys a stock',
   sell: SELL_USAGE + '\n\nSells a stock',
   report: REPORT_USAGE,
