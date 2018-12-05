@@ -11,9 +11,12 @@ const Alpaca = require('@alpacahq/alpaca-trade-api')
 const config = new Conf({ configName: 'alpacacli' })
 
 function getAlpaca () {
+  const keyId = config.get('keyId')
+  const secretKey = config.get('secretKey')
+  if (!keyId || !secretKey) throw new Error("No alpaca configuration found.\nSee 'alpaca help configure' for more information.")
   return new Alpaca({
-    keyId: config.get('keyId'),
-    secretKey: config.get('secretKey'),
+    keyId,
+    secretKey,
     paper: config.get('mode') === 'paper',
     baseUrl: config.get('baseUrl')
   })
@@ -44,18 +47,22 @@ const REPORT_USAGE = `'report' is not yet implemented! :(
 
 Code contributions are welcome!`
 
+const CONFIGURE_USAGE = `alpaca configure [--id=<key id>] [--secret=<secret key>] [--mode=<paper|live>]`
+
 const HELP = `Usage:
 alpaca <command>
 
 commands:
-  buy      buy a stock
-  sell     sell a stock
-  report   display a report of your current portfolio
+  configure   configure your alpaca cli installation
+  buy         buy a stock
+  sell        sell a stock
+  report      display a report of your current portfolio
 
 Run 'alpaca help <command>' for help with a specific command.
 `
 
 const HELP_DETAILS = {
+  configure: CONFIGURE_USAGE + '\n\nConfigures your alpaca cli installation',
   buy: BUY_USAGE + '\n\nBuys a stock',
   sell: SELL_USAGE + '\n\nSells a stock',
   report: REPORT_USAGE,

@@ -18,5 +18,11 @@
     "joi": "^14.3.0",
     "minimist": "^1.2.0",
     "minimist-options": "^3.0.2"
-  }
+  },
+  "keywords": [
+    "alpaca",
+    "stock",
+    "trade",
+    "cli"
+  ]
 }
