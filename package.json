@@ -1,6 +1,6 @@
 {
   "name": "alpaca-cli",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Manage your Alpaca portfolio from the comfort of your terminal!",
   "main": "index.js",
   "scripts": {
