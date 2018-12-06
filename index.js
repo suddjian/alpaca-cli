@@ -2,7 +2,6 @@
 'use strict'
 
 const Conf = require('conf')
-const commandLineCommands = require('command-line-commands')
 const minimistOpts = require('minimist-options')
 const parseArgs = require('minimist')
 const joi = require('joi')
@@ -21,15 +20,6 @@ function getAlpaca () {
     baseUrl: config.get('baseUrl')
   })
 }
-
-const validCommands = [
-  null, // alias for 'help'
-  'report',
-  'buy',
-  'sell',
-  'configure',
-  'help',
-]
 
 const BUY_USAGE = `alpaca buy [quantity] <symbol>
   [--type=<market|limit|stop|stop_limit>]
@@ -204,7 +194,7 @@ function help (args) {
 
 !async function () {
   try {
-    const { command, argv } = commandLineCommands(validCommands)
+    const [,,command, ...argv] = process.argv
     const action = cli[command] || cli.help
 
     const parsedArgs = parseArgs(argv, action.options)
@@ -214,7 +204,6 @@ function help (args) {
     console.error(err.message)
   }
 }()
-
 
 function assertSchema (value, schema) {
   const result = joi.validate(value, schema, {
