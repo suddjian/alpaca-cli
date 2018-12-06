@@ -33,9 +33,9 @@ const SELL_USAGE = `alpaca sell [quantity] <symbol>
   [--limit-price=<number>]
   [--stop-price=<number>]`
 
-const REPORT_USAGE = `'report' is not yet implemented! :(
+const REPORT_USAGE = `alpaca report
 
-Code contributions are welcome!`
+Outputs a report of your current portfolio`
 
 const CONFIGURE_USAGE = `alpaca configure [--id=<key-id>] [--secret=<secret-key>] [--mode=<paper|live>]
 
@@ -118,8 +118,64 @@ const order = (side, usage) => async ({
 
   console.log(`Placed a ${type} order to ${side} ${qty} share${qty > 1 ? 's' : ''} of ${symbol} ${priceText}.
 
-  order id:  ${order.id}
-  `)
+  order id:  ${order.id}`)
+}
+
+async function report () {
+  const alpaca = getAlpaca()
+  const positions = await alpaca.getPositions()
+
+  // formatting the info
+  const usd = (number) => parseFloat(number).toLocaleString(undefined, {
+    style: 'currency',
+    currency: 'USD'
+  })
+  const pad = (length, str) => str.padStart(length, ' ')
+  const positionDescriptions = positions.map(pos => (
+    pad(8, pos.symbol) + pad(8, pos.qty) + pad(10, usd(pos.cost_basis))
+    + pad(10, usd(pos.market_value)) + pad(12, usd(pos.unrealized_pl))
+  ))
+
+  // formatted performance info
+  const performance = positions.reduce((total, pos) => {
+    return total + parseFloat(pos.unrealized_pl)
+  }, 0)
+  const perfSign = performance > 0 ? '+' : ''
+
+  const positionSummary = `
+Portfolio:
+  symbol     qty      cost     value      profit
+${positionDescriptions.join('\n')}
+
+Performance:
+  ${perfSign}${usd(performance)}
+  `
+  console.log(positionSummary)
+}
+
+function configure (args) {
+  if (args.id) config.set('keyId', args.id)
+  if (args.secret) config.set('secretKey', args.secret)
+  if (args.mode) config.set('mode', args.mode)
+  if (args['base-url']) config.set('baseUrl', args['base-url'])
+
+  console.log('configured ' + Object.keys(args)
+    .filter(key => key !== '_')
+    .join(', ')
+  )
+}
+
+function help (args) {
+  const [command] = args._
+
+  if (command) {
+    if (!HELP_DETAILS[command]) {
+      throw new Error(`'${command}' is not an alpaca command. See 'alpaca help'`)
+    }
+    console.log(HELP_DETAILS[command])
+  } else {
+    console.log(HELP)
+  }
 }
 
 const cli = {
@@ -161,35 +217,6 @@ const cli = {
     options: minimistOpts({}),
     fn: help,
   },
-}
-
-function configure (args) {
-  if (args.id) config.set('keyId', args.id)
-  if (args.secret) config.set('secretKey', args.secret)
-  if (args.mode) config.set('mode', args.mode)
-  if (args['base-url']) config.set('baseUrl', args['base-url'])
-
-  console.log('configured ' + Object.keys(args)
-    .filter(key => key !== '_')
-    .join(', ')
-  )
-}
-
-function report () {
-  console.log('`report` command not yet implemented :(')
-}
-
-function help (args) {
-  const [command] = args._
-
-  if (command) {
-    if (!HELP_DETAILS[command]) {
-      throw new Error(`'${command}' is not an alpaca command. See 'alpaca help'`)
-    }
-    console.log(HELP_DETAILS[command])
-  } else {
-    console.log(HELP)
-  }
 }
 
 !async function () {
