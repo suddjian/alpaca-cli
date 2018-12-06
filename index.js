@@ -116,7 +116,20 @@ const order = (side, usage) => async ({
   const order = await alpaca.createOrder({
     symbol, qty, side, type, time_in_force, limit_price, stop_price, client_order_id
   })
-  console.log(order)
+
+  const getMarketPrice = async () => {
+    const latestBar = (await alpaca.getBars('minute', symbol, { limit: 1 }))[symbol][0]
+    return latestBar.c
+  }
+  const priceText = type === 'stop_limit' ? `between $${stop_price} and $${limit_price}`
+    : type === 'limit' ? `at $${limit_price}`
+    : type === 'stop' ? `at $${stop_price}`
+    : `at $${await getMarketPrice()}`
+
+  console.log(`Placed a ${type} order to ${side} ${qty} share${qty > 1 ? 's' : ''} of ${symbol} ${priceText}.
+
+  order id:  ${order.id}
+  `)
 }
 
 const cli = {
