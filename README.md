@@ -2,7 +2,7 @@
 
 Manage your Alpaca portfolio from the comfort of your terminal!
 
-Good when you want to trade inconspicuously (at work, at school, in a boring meeting),
+Good when you want to trade inconspicuously (at work, at school, on a date),
 or if you're just a nerd like me.
 
 ## Warning
