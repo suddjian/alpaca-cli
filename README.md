@@ -13,7 +13,7 @@ Make sure that you know what a command will do before you run it.
 This tool is not actively maintained, and was created only for my own personal use and amusement,
 and is distributed in the hope that others might find it interesting.
 It does not come with safety features and has no guarantees of correctness.
-You have no right to sue me if you lose money using this software.
+It's provided without warranty, etc. You have no right to sue me over any issues with this software.
 
 ## Installation
 
